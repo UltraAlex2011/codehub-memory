@@ -1,6 +1,6 @@
 # Code Hub installer for Windows - one line in PowerShell:
 #   irm https://raw.githubusercontent.com/UltraAlex2011/codehub-memory/main/scripts/install.ps1 | iex
-# Installs Python with winget when it is missing, puts the newest release
+# Installs Python with winget when it is missing, puts the newest version
 # into %LOCALAPPDATA%\codehub\app, adds the "codehub" command, sets Code Hub
 # up for Claude Code and opens the view. Running it again updates.
 $ErrorActionPreference = 'Stop'
@@ -42,14 +42,13 @@ if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
         '! Claude Code is not installed yet – Code Hub sets itself up anyway; install https://claude.com/claude-code afterwards.'
 }
 
-# ---- newest release ----
+# ---- newest version ----
 $Data = Join-Path $env:LOCALAPPDATA 'codehub'
 $App = Join-Path $Data 'app'
 $Tmp = Join-Path ([IO.Path]::GetTempPath()) ('codehub-' + [guid]::NewGuid())
 New-Item -ItemType Directory -Force -Path $Tmp | Out-Null
 try {
-    $url = "https://github.com/$Repo/archive/refs/heads/main.zip"
-    try { $url = (Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest").zipball_url } catch { }
+    $url = "https://codeload.github.com/$Repo/zip/refs/heads/main"
     Invoke-WebRequest $url -OutFile (Join-Path $Tmp 'codehub.zip') -UseBasicParsing
     Expand-Archive (Join-Path $Tmp 'codehub.zip') -DestinationPath (Join-Path $Tmp 'x') -Force
     $src = Get-ChildItem (Join-Path $Tmp 'x') -Directory | Select-Object -First 1

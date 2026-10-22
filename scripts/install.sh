@@ -1,7 +1,7 @@
 #!/bin/sh
 # Code Hub installer for macOS and Linux - one line in a terminal:
 #   curl -fsSL https://raw.githubusercontent.com/UltraAlex2011/codehub-memory/main/scripts/install.sh | sh
-# Puts the newest release into the data folder, adds the "codehub" command,
+# Puts the newest version into the data folder, adds the "codehub" command,
 # sets Code Hub up for Claude Code and opens the view. Running it again
 # updates. Needs Python 3.9 or newer, nothing else.
 set -eu
@@ -41,7 +41,7 @@ command -v curl >/dev/null 2>&1 || fail "curl fehlt." "curl is missing."
 command -v claude >/dev/null 2>&1 || say "! Claude Code ist noch nicht installiert – Code Hub richtet sich trotzdem ein; danach https://claude.com/claude-code installieren." \
                                         "! Claude Code is not installed yet – Code Hub sets itself up anyway; install https://claude.com/claude-code afterwards."
 
-# ---- newest release ----
+# ---- newest version ----
 if [ "$(uname)" = Darwin ]; then
     DATA="$HOME/Library/Application Support/codehub"
 else
@@ -50,10 +50,7 @@ fi
 APP="$DATA/app"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
-URL="$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" 2>/dev/null \
-       | sed -n 's/.*"tarball_url": *"\([^"]*\)".*/\1/p' | head -n 1)"
-[ -n "$URL" ] || URL="https://github.com/$REPO/archive/refs/heads/main.tar.gz"
-curl -fsSL "$URL" | tar -xzf - -C "$TMP" || fail "Download fehlgeschlagen – Internetverbindung prüfen." "Download failed – check the internet connection."
+curl -fsSL "https://codeload.github.com/$REPO/tar.gz/refs/heads/main" | tar -xzf - -C "$TMP" || fail "Download fehlgeschlagen – Internetverbindung prüfen." "Download failed – check the internet connection."
 SRC="$(find "$TMP" -mindepth 1 -maxdepth 1 -type d | head -n 1)"
 [ -f "$SRC/codehub/__init__.py" ] || fail "Der Download ist unvollständig." "The download is incomplete."
 mkdir -p "$DATA"

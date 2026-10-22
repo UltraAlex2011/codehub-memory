@@ -1,9 +1,9 @@
-# "codehub update": the newest release from GitHub replaces the installed
+# "codehub update": the newest published version replaces the installed
 # copy (the installer puts it in <data dir>/app). A git checkout updates with
 # git, a pipx install with pipx - both are only named, never run here.
 import io
-import json
 import os
+import re
 import shutil
 import tarfile
 import urllib.request
@@ -21,9 +21,11 @@ def _get(url, accept='application/vnd.github+json'):
 
 
 def latest():
-    # -> (version, tarball url) of the newest release
-    d = json.loads(_get(f'https://api.github.com/repos/{REPO}/releases/latest'))
-    return d['tag_name'].lstrip('v'), d['tarball_url']
+    # -> (version, tarball url) of what is published on main - every publish
+    # is a release, so there are no tags to keep in step
+    init = _get(f'https://raw.githubusercontent.com/{REPO}/main/codehub/__init__.py', 'text/plain').decode()
+    version = re.search(r"VERSION = '([^']+)'", init).group(1)
+    return version, f'https://codeload.github.com/{REPO}/tar.gz/refs/heads/main'
 
 
 def newer(a, b):
@@ -41,7 +43,7 @@ def run(say=print):
         return 1
     try:
         version, url = latest()
-    except (OSError, ValueError, KeyError) as e:
+    except (OSError, ValueError, AttributeError) as e:
         say(i18n.t('update.offline', error=e))
         return 1
     if not newer(version, VERSION):
