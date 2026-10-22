@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codehub-memory"
+dynamic = ["version"]
+description = "Long-term memory for Claude Code: knows which file does what, remembers decisions and sessions, and saves tokens."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "UltraAlex2011" }]
+keywords = ["claude", "claude-code", "mcp", "memory", "tokens", "obsidian", "developer-tools"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development",
+]
+dependencies = []
+
+[project.scripts]
+codehub = "codehub.cli:main"
+
+[project.urls]
+Homepage = "https://ultraalex2011.github.io/codehub-memory/"
+Source = "https://github.com/UltraAlex2011/codehub-memory"
+
+[tool.setuptools]
+packages = ["codehub"]
+
+[tool.setuptools.package-data]
+codehub = ["shop.json", "locale/*.json", "web/*", "templates/*.md", "templates/*/*.md", "templates/*/*/*.md"]
+
+[tool.setuptools.dynamic]
+version = { attr = "codehub.VERSION" }

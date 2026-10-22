@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Code Hub – memory for Claude Code</title>
+<meta name="description" content="Code Hub gives Claude Code a long-term memory: it knows which file does what, remembers decisions and every session, and saves tokens.">
+<meta property="og:title" content="Code Hub – memory for Claude Code">
+<meta property="og:description" content="Claude asks the map instead of searching your whole project. Fewer tokens, sessions that remember yesterday.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#top"><img src="icon.svg" alt="" width="28" height="28"><span>Code Hub</span></a>
+  <nav>
+    <a href="#how" data-t="nav_how"></a>
+    <a href="#pricing" data-t="nav_pricing"></a>
+    <a href="#install" data-t="nav_install"></a>
+    <a href="#faq" data-t="nav_faq"></a>
+  </nav>
+  <button class="lang" id="lang" type="button" aria-label="Language">DE</button>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="hero-text">
+      <p class="eyebrow" data-t="eyebrow"></p>
+      <h1 data-t="title"></h1>
+      <p class="lead" data-t="lead"></p>
+      <div class="cta">
+        <a class="btn primary" href="#install" data-t="cta_install"></a>
+        <a class="btn" href="#pricing" data-t="cta_premium"></a>
+      </div>
+      <p class="fine" data-t="hero_fine"></p>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <h2 data-t="how_title"></h2>
+    <ol class="steps">
+      <li><b data-t="step1"></b><span data-t="step1_text"></span></li>
+      <li><b data-t="step2"></b><span data-t="step2_text"></span></li>
+      <li><b data-t="step3"></b><span data-t="step3_text"></span></li>
+    </ol>
+    <div class="features">
+      <article><h3 data-t="f_map"></h3><p data-t="f_map_text"></p></article>
+      <article><h3 data-t="f_auto"></h3><p data-t="f_auto_text"></p></article>
+      <article><h3 data-t="f_memory"></h3><p data-t="f_memory_text"></p></article>
+      <article><h3 data-t="f_feed"></h3><p data-t="f_feed_text"></p></article>
+      <article><h3 data-t="f_local"></h3><p data-t="f_local_text"></p></article>
+      <article><h3 data-t="f_numbers"></h3><p data-t="f_numbers_text"></p></article>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <h2 data-t="pricing_title"></h2>
+    <div class="plans">
+      <article class="plan">
+        <h3 data-t="free"></h3>
+        <p class="amount">0 €</p>
+        <ul>
+          <li data-t="free1"></li><li data-t="free2"></li><li data-t="free3"></li><li data-t="free4"></li><li data-t="free5"></li>
+        </ul>
+        <a class="btn" href="#install" data-t="free_cta"></a>
+      </article>
+      <article class="plan premium">
+        <h3>Premium</h3>
+        <p class="amount"><span id="price">10 €</span> <small data-t="once"></small></p>
+        <ul>
+          <li data-t="prem0"></li><li data-t="prem1"></li><li data-t="prem2"></li><li data-t="prem3"></li><li data-t="prem4"></li><li data-t="prem5"></li>
+        </ul>
+        <div class="buy" id="buy"></div>
+        <p class="fine" data-t="prem_fine"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="install" id="install">
+    <h2 data-t="install_title"></h2>
+    <p data-t="install_text"></p>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-os="unix">macOS · Linux</button>
+      <button role="tab" aria-selected="false" data-os="win">Windows</button>
+      <button role="tab" aria-selected="false" data-os="pipx">pipx</button>
+    </div>
+    <div class="command">
+      <code id="command"></code>
+      <button class="copy" id="copy" type="button" data-t="copy"></button>
+    </div>
+    <p class="fine" id="commandHint"></p>
+    <ol class="after">
+      <li data-t="after1"></li>
+      <li data-t="after2"></li>
+      <li data-t="after3"></li>
+    </ol>
+  </section>
+
+  <section class="faq" id="faq">
+    <h2 data-t="faq_title"></h2>
+    <details><summary data-t="q_privacy"></summary><p data-t="a_privacy"></p></details>
+    <details><summary data-t="q_tokens"></summary><p data-t="a_tokens"></p></details>
+    <details><summary data-t="q_systems"></summary><p data-t="a_systems"></p></details>
+    <details><summary data-t="q_license"></summary><p data-t="a_license"></p></details>
+    <details><summary data-t="q_refund"></summary><p data-t="a_refund"></p></details>
+    <details><summary data-t="q_obsidian"></summary><p data-t="a_obsidian"></p></details>
+    <details><summary data-t="q_remove"></summary><p data-t="a_remove"></p></details>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Code Hub</span>
+  <a href="https://github.com/UltraAlex2011/codehub-memory">GitHub</a>
+  <span id="legal"></span>
+  <span class="fine" data-t="not_anthropic"></span>
+</footer>
+
+<script src="forces.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

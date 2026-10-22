@@ -1,0 +1,16 @@
+{
+  "price": "10 €",
+  "devices": 3,
+  "site": "https://ultraalex2011.github.io/codehub-memory/",
+  "lemonsqueezy": {
+    "checkout": "",
+    "store_id": 0,
+    "product_id": 0
+  },
+  "gumroad": {
+    "url": "",
+    "product_id": ""
+  },
+  "imprint": "",
+  "privacy": ""
+}
