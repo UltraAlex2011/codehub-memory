@@ -69,5 +69,9 @@ Set-Content -Path (Join-Path $Bin 'codehub.cmd') -Encoding ASCII -Value "@`"$Py`
 # ---- set up for Claude Code, then show it ----
 & $Py (Join-Path $App 'bin\codehub') install
 & $Py (Join-Path $App 'bin\codehub') open | Out-Null
-Say 'Fertig. Die Ansicht ist im Browser offen – später jederzeit: codehub open' `
-    'Done. The view is open in your browser – any time later: codehub open'
+if ($LASTEXITCODE -eq 0) {
+    Say 'Fertig. Die Ansicht ist im Browser offen – später jederzeit: codehub open' `
+        'Done. The view is open in your browser – any time later: codehub open'
+} else {
+    Say 'Fertig. Ansehen: codehub open' 'Done. Look at it: codehub open'
+}

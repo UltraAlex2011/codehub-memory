@@ -10,11 +10,15 @@ REPO="UltraAlex2011/codehub-memory"
 case "${LC_ALL:-${LANG:-}}" in de*) DE=1 ;; *) DE= ;; esac
 say() { if [ -n "$DE" ]; then printf '%s\n' "$1"; else printf '%s\n' "$2"; fi; }
 fail() { say "✗ $1" "✗ $2" >&2; exit 1; }
-# questions come from the keyboard even when the script arrives through a pipe
+# questions come from the keyboard even when the script arrives through a pipe;
+# without a terminal (CI, scripts) the defaults are taken
+has_tty() { (: </dev/tty) 2>/dev/null; }
 ask() {
     printf '%s ' "$1"
-    if [ -r /dev/tty ]; then read -r answer </dev/tty || answer=""; else answer=""; fi
+    answer=""
+    if has_tty; then read -r answer </dev/tty || answer=""; else printf '\n'; fi
     [ -z "$answer" ] && answer="$2"
+    return 0
 }
 
 say "Code Hub wird installiert …" "Installing Code Hub …"
@@ -83,7 +87,10 @@ case ":$PATH:" in
 esac
 
 # ---- set up for Claude Code, then show it ----
-if [ -r /dev/tty ]; then "$BIN/codehub" install </dev/tty; else "$BIN/codehub" install; fi
-"$BIN/codehub" open >/dev/null 2>&1 || true
-say "✓ Fertig. Die Ansicht ist im Browser offen – später jederzeit: codehub open" \
-    "✓ Done. The view is open in your browser – any time later: codehub open"
+if has_tty; then "$BIN/codehub" install </dev/tty; else "$BIN/codehub" install </dev/null; fi
+if "$BIN/codehub" open >/dev/null 2>&1; then
+    say "✓ Fertig. Die Ansicht ist im Browser offen – später jederzeit: codehub open" \
+        "✓ Done. The view is open in your browser – any time later: codehub open"
+else
+    say "✓ Fertig. Ansehen: codehub open" "✓ Done. Look at it: codehub open"
+fi
